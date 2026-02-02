@@ -37,28 +37,29 @@ bool RunCalculatorCycle() {
 	bool is_stored = false;
     std::string oper;
 	std::vector<std::string> valid_token = { "+", "-", "*", "/", "**", "=", ":", "c", "s", "l", "q" };
+	
     ReadNumber(number);
-        result += number;
-        while (std::cin >> oper) {  
-			if (std::find(valid_token.begin(), valid_token.end(), oper) == valid_token.end()) {
-                std::cerr << "Error: Unknown token " << oper;
-                return 0;
-            }
-            else if (oper == "q") return 1;
-            else if (oper == "=") std::cout << result << std::endl;
-            else if (oper == "c") result = 0;
-            else if (oper == "s" || oper == "l") {
-                if (!SaveLoad(oper, store, result, is_stored)) return 0;
-            }
-            else {
-                if (!ReadNumber(number)) return 0;
-                else if (oper == "+") result += number;
-                else if (oper == "-") result -= number;
-                else if (oper == "*") result *= number;
-                else if (oper == "/") result /= number;
-                else if (oper == "**") result = std::pow(result, number);
-                else if (oper == ":") result = number;             
+    result += number;
+    while (std::cin >> oper) {  
+		if (std::find(valid_token.begin(), valid_token.end(), oper) == valid_token.end()) {
+            std::cerr << "Error: Unknown token " << oper;
+            return 0;
+        }
+        else if (oper == "q") return 1;
+        else if (oper == "=") std::cout << result << std::endl;
+        else if (oper == "c") result = 0;
+        else if (oper == "s" || oper == "l") {
+			if (!SaveLoad(oper, store, result, is_stored)) return 0;
+        }
+        else {
+            if (!ReadNumber(number)) return 0;
+            else if (oper == "+") result += number;
+            else if (oper == "-") result -= number;
+            else if (oper == "*") result *= number;
+            else if (oper == "/") result /= number;
+            else if (oper == "**") result = std::pow(result, number);
+            else if (oper == ":") result = number;             
             }
         }
-        return 0;
+    return 0;
 }
