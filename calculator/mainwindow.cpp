@@ -72,7 +72,7 @@ QString MainWindow::FormatDouble(const double value)
         return QString::number(value, 'f', 0);
     }
     else {
-        QString str = QString::number(value, 'f', MAX_INPUT_LEN - int_part -1);
+        QString str = QString::number(value, 'f', MAX_INPUT_LEN - int_part - 1);
         while (str.contains('.') && str.endsWith('0')) {
         str.chop(1);
     }
