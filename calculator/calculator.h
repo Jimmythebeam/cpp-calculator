@@ -1,11 +1,23 @@
-#pragma once
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
 
-#include <string>
+#pragma once
 
 using Number = double;
 
-bool ReadNumber(Number& result);
+class Calculator {
 
-bool SaveLoad(const std::string& oper, Number& store, Number& result, bool& was_stored);
+public:
+    void Set(Number n);
+    Number GetNumber() const;
+    void Add(Number n);
+    void Sub(Number n);
+    void Div(Number n);
+    void Mul(Number n);
+    void Pow(Number n);
 
-bool RunCalculatorCycle();
+private:
+    Number result_ = 0.0;
+};
+
+#endif // CALCULATOR_H
