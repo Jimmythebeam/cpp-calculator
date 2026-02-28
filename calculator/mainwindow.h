@@ -18,27 +18,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    inline static const int MAX_INPUT_LEN = 32;    // максимальное число разрядов для отображения на дисплее
-
-    enum class Operation {
-        NO_OPERATION,
-        ADDITION,
-        SUBTRACTION,
-        MULTIPLICATION,
-        DIVISION,
-        POWER
-    };
-
-    void AddText(const QString& suffix);
-    void SetText(const QString& text);
-    QString RemoveTrailingZeroes(const QString &text);
-    QString NormalizeNumber(const QString &text);
-    void SetOperation(Operation op);
-    QString FormatDouble (const double value);         // форматирование числа с плавающей точкой (отображение без экспоненты)
-    QString OpToString(Operation op);
-
-
-
 private slots:
     void on_btn_one_clicked();
 
@@ -88,12 +67,32 @@ private slots:
 
 
 private:
+
+    inline static const int MAX_INPUT_LEN = 32;    // максимальное число разрядов для отображения на дисплее
+
+    enum class Operation {
+        NO_OPERATION,
+        ADDITION,
+        SUBTRACTION,
+        MULTIPLICATION,
+        DIVISION,
+        POWER
+    };
+
+    void AddText(const QString& suffix);
+    void SetText(const QString& text);
+    QString RemoveTrailingZeroes(const QString &text);
+    QString NormalizeNumber(const QString &text);
+    void SetOperation(Operation op);
+    QString FormatNumber (const Number value);         // форматирование числа с плавающей точкой (отображение без экспоненты)
+    QString OpToString(Operation op);
+
     Ui::MainWindow *ui;
     Calculator calculator_;
     QString input_number_;
     Number active_number_;
     Operation current_operation_ = Operation::NO_OPERATION;
-    double stored_number_;
+    Number stored_number_;
     bool is_stored_ = false;
 };
 #endif // MAINWINDOW_H

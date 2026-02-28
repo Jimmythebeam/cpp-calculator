@@ -60,12 +60,12 @@ void MainWindow::SetOperation(Operation op) {
     }
      current_operation_ = op;
      ui->l_formula->setText(QString("%1 %2")
-        .arg(FormatDouble(calculator_.GetNumber()))
+        .arg(FormatNumber(calculator_.GetNumber()))
         .arg(OpToString(current_operation_)));
     input_number_.clear();
 }
 
-QString MainWindow::FormatDouble(const double value)
+QString MainWindow::FormatNumber(const Number value)
 {
    int int_part = QString::number(std::floor(value)).size();
     if (std::floor(value) == value) {
@@ -217,9 +217,9 @@ void MainWindow::on_btn_result_clicked()
     }
     else {
         ui->l_formula->setText(QString("%1 %2 %3 =")
-            .arg(FormatDouble(calculator_.GetNumber()))
+            .arg(FormatNumber(calculator_.GetNumber()))
             .arg (OpToString(current_operation_))
-            .arg (FormatDouble(active_number_)));
+            .arg (FormatNumber(active_number_)));
         switch (current_operation_) {
             case Operation::ADDITION: {
                 calculator_.Add(active_number_);
@@ -244,7 +244,7 @@ void MainWindow::on_btn_result_clicked()
             default: break;
         }
         active_number_ = calculator_.GetNumber();
-        ui->l_result->setText(FormatDouble(active_number_));
+        ui->l_result->setText(FormatNumber(active_number_));
         input_number_.clear();
         current_operation_ = Operation::NO_OPERATION;
     }
@@ -268,7 +268,7 @@ void MainWindow::on_btn_mr_clicked()
 {
     if (is_stored_) {
         active_number_ = stored_number_;
-        ui->l_result->setText(FormatDouble(active_number_));
+        ui->l_result->setText(FormatNumber(active_number_));
         input_number_.clear();
     }
 }
