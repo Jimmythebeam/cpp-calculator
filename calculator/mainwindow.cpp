@@ -153,13 +153,20 @@ void MainWindow::on_btn_dot_clicked() {
 
 void MainWindow::on_btn_sign_clicked()
 {
-    if (input_number_.startsWith("-")) {
-        input_number_ = input_number_.mid(1);
-    }
-    else if (input_number_ != "0"){
+    if (!input_number_.isEmpty()){
+        if (input_number_.startsWith("-")) {
+           input_number_ = input_number_.mid(1);
+         }
+         else if (input_number_ != "0"){
         input_number_.insert(0, "-");
+         }
+        SetText(input_number_);
     }
-    SetText(input_number_);
+    if (input_number_.isEmpty() && active_number_ !=0) {
+        active_number_ *= -1;
+        SetText(QString::number(active_number_));
+    }
+
 }
 
 
