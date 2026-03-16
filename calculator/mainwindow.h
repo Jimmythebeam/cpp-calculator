@@ -1,8 +1,10 @@
+#pragma once
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "calculator.h"
 #include <QMainWindow>
+#include <enums.h>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,10 +20,19 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void SetInputText(const std::string& text);
+    void SetErrorText(const std::string& text);
+    void SetFormulaText(const std::string& text);
+    void SetMemText(const std::string& text);
+    void SetExtraKey(const std::optional<std::string>& key);
+    void SetDigitKeyCallback(std::function<void(int key)> cb);
+    void SetProcessOperationKeyCallback(std::function<void(Operation key)> cb);
+    void SetProcessControlKeyCallback(std::function<void(ControlKey key)> cb);
+    void SetControllerCallback(std::function<void(ControllerType controller)> cb);
+
+
 private slots:
     void on_btn_one_clicked();
-
-    void on_btn_zero_clicked();
 
     void on_btn_two_clicked();
 
@@ -39,25 +50,21 @@ private slots:
 
     void on_btn_nine_clicked();
 
-    void on_btn_dot_clicked();
-
-    void on_btn_sign_clicked();
-
-    void on_btn_bckspace_clicked();
-
-    void on_btn_power_clicked();
-
-    void on_btn_division_clicked();
-
-    void on_btn_multiplication_clicked();
-
-    void on_btn_subtraction_clicked();
+    void on_btn_zero_clicked();
 
     void on_btn_addition_clicked();
 
-    void on_btn_clear_clicked();
+    void on_btn_subtraction_clicked();
+
+    void on_btn_multiplication_clicked();
+
+    void on_btn_division_clicked();
+
+    void on_btn_power_clicked();
 
     void on_btn_result_clicked();
+
+    void on_btn_clear_clicked();
 
     void on_btn_ms_clicked();
 
@@ -65,34 +72,20 @@ private slots:
 
     void on_btn_mc_clicked();
 
+    void on_btn_sign_clicked();
+
+    void on_btn_bckspace_clicked();
+
+    void on_cmb_controller_currentIndexChanged(int index);
+
+    void on_tb_extra_clicked();
 
 private:
-
-    inline static const int MAX_INPUT_LEN = 32;    // максимальное число разрядов для отображения на дисплее
-
-    enum class Operation {
-        NO_OPERATION,
-        ADDITION,
-        SUBTRACTION,
-        MULTIPLICATION,
-        DIVISION,
-        POWER
-    };
-
-    void AddText(const QString& suffix);
-    void SetText(const QString& text);
-    QString RemoveTrailingZeroes(const QString &text);
-    QString NormalizeNumber(const QString &text);
-    void SetOperation(Operation op);
-    QString FormatNumber (const Number value);         // форматирование числа с плавающей точкой (отображение без экспоненты)
-    QString OpToString(Operation op);
-
     Ui::MainWindow *ui;
-    Calculator calculator_;
-    QString input_number_;
-    Number active_number_;
-    Operation current_operation_ = Operation::NO_OPERATION;
-    Number stored_number_;
-    bool is_stored_ = false;
+    std::function<void(int key)> digit_key_callback_;
+    std::function<void(Operation key)> operation_key_callback_;
+    std::function<void(ControlKey key)> control_key_callback_;
+    std::function<void(ControllerType controller)> controller_key_callback_;
+
 };
 #endif // MAINWINDOW_H
